@@ -1,0 +1,17 @@
+{
+  "name": "@alrale/cli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "koala-cli": "index.js",
+    "ka": "index.js"
+  },
+  "author": "Gj",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^7.1.0",
+    "download-git-repo": "^3.0.2",
+    "rimraf": "^3.0.2"
+  }
+}
