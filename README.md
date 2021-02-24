@@ -1,1 +1,1 @@
-# koala-cli
+# @alrale/cli
