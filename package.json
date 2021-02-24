@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "bin": {
-    "koala-cli": "index.js",
-    "ka": "index.js"
+    "alrale": "index.js",
+    "al": "index.js"
   },
   "author": "Gj",
   "license": "MIT",
