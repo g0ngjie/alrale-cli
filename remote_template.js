@@ -4,7 +4,7 @@ const path = require("path");
 const rimraf = require("rimraf");
 
 exports.koaBasicServices = async function() {
-    await downloadTemplate('https://gitee.com:gjwork/koa2-basic-services-template#master', 'koa2-basic-services-template')
+    return await downloadTemplate('https://gitee.com:gjwork/koa2-basic-services-template#master', 'koa2-basic-services-template')
 }
 
 function downloadTemplate(url, target) {
@@ -13,7 +13,7 @@ function downloadTemplate(url, target) {
     return new Promise((resolve, reject) => {
         download(url, target, { clone: true }, (err) => {
             if (err) reject(err)
-            else resolve()
+            else resolve(target)
         })
     })
 }

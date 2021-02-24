@@ -40,8 +40,13 @@ async function initTemplate() {
         const [, name] = args
         if (name === 'koa') {
             console.log('正在安装...')
-            await template.koaBasicServices()
-            console.log('安装完成!')
+            const _path = await template.koaBasicServices()
+            printMsg([
+                '安装完成!',
+                `cd ${_path}`,
+                'yarn 或者 npm install 安装依赖',
+                'yarn dev 启动开发环境'
+            ])
         }
     }
 }
