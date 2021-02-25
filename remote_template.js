@@ -3,8 +3,10 @@ const download = require("download-git-repo");
 const path = require("path");
 const rimraf = require("rimraf");
 
-exports.koaBasicServices = async function() {
-    return await downloadTemplate('https://gitee.com:gjwork/koa2-basic-services-template#master', 'koa2-basic-services-template')
+exports.koaBasicServices = function() {
+    const url = 'https://gitee.com:gjwork/koa2-basic-services-template#master'
+    const dir = 'koa2-basic-services-template'
+    return downloadTemplate(url, dir)
 }
 
 function downloadTemplate(url, target) {
