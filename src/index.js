@@ -5,7 +5,7 @@ exports.remoteTemplate = require('./remote_template')
 exports.dict = require('./dict')
 // 箴言、言语、格言
 exports.proverbs = require('./proverbs')
-// helper
-exports.helper = require('./helper')
+// print
+exports.print = require('./print')
 // 计算器
 exports.calculator = require('./calculator')
