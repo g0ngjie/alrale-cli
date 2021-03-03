@@ -65,7 +65,6 @@ function formatTs(timestamp) {
     return table.toString()
 }
 
-
 exports.FmtTimestamp = function (ts) {
     const msg = formatTs(ts)
     return { ok: true, msg }
