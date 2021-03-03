@@ -3,7 +3,7 @@
 const program = require('commander');
 const PKG = require('./package.json');
 const ora = require('ora');
-const { remoteTemplate, dict, print, calculator } = require('./src/index')
+const { remoteTemplate, dict, print, calculator, date } = require('./src/index')
 
 /* ========== cmd methods ========== */
 // 模板下载
@@ -30,8 +30,20 @@ async function initTemplate() {
 }
 
 // 查询字典
-async function queryByDictionary(word) {
+async function queryByDictionary() {
+    const [, ...args] = program.args
+    if (!args.length) return print.Error('请输入查询参数')
+    const word = args.join(' ');
     const { ok, msg } = await dict.Query(word)
+    if (ok) print.Message(msg)
+    else print.Error(msg)
+}
+
+function fmtTs() {
+    const [, ts] = program.args
+    console.log(typeof ts, 'typeof ts');
+    if (!ts) return print.Error('请输入时间戳')
+    const { ok, msg } = date.FmtTimestamp(ts)
     if (ok) print.Message(msg)
     else print.Error(msg)
 }
@@ -58,12 +70,12 @@ program
 program
     .command('q')
     .description('翻译 [...args]')
-    .action(() => {
-        const [, ...args] = program.args
-        if (!args.length) return print.Error('请输入查询参数')
-        const word = args.join(' ');
-        queryByDictionary(word)
-    });
+    .action(() => queryByDictionary());
+
+program
+    .command('ts')
+    .description('格式化时间戳 [timestamp]')
+    .action(() => fmtTs());
 
 program
     .parse(process.argv);

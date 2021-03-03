@@ -17,7 +17,7 @@ exports.Query = function (word) {
                 else if (data.translation) result[word] = data['translation'];
                 else resolve({ ok: false, msg: '查询异常' })
                 // 输出表格
-                let table = new Table();
+                const table = new Table();
                 table.push(result);
                 resolve({ ok: true, msg: table.toString() })
             })

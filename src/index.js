@@ -9,3 +9,5 @@ exports.proverbs = require('./proverbs')
 exports.print = require('./print')
 // 计算器
 exports.calculator = require('./calculator')
+// 日期
+exports.date = require('./date')
