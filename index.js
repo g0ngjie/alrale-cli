@@ -6,6 +6,7 @@ const ora = require('ora');
 const { remoteTemplate, dict, print, calculator } = require('./src/index')
 
 /* ========== cmd methods ========== */
+// 模板下载
 async function initTemplate() {
     const args = program.args
     if (args.length <= 1) print.Error('当前命令不存在')
@@ -15,7 +16,8 @@ async function initTemplate() {
         spinner.color = 'cyan';
         if (name === 'koa') {
             spinner.text = '正在安装...';
-            const _path = await remoteTemplate.koaBasicServices()
+            // 下载koa模板
+            const _path = await remoteTemplate.KoaBasicServices()
             spinner.succeed('安装完成!')
             spinner.stop()
             print.Messages([
@@ -27,8 +29,9 @@ async function initTemplate() {
     }
 }
 
+// 查询字典
 async function queryByDictionary(word) {
-    const { ok, msg } = await dict.query(word)
+    const { ok, msg } = await dict.Query(word)
     if (ok) print.Message(msg)
     else print.Error(msg)
 }

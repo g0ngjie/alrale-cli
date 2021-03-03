@@ -4,7 +4,7 @@ const superagent = require('superagent') // http请求
 
 const url = `http://fanyi.youdao.com/openapi.do?keyfrom=toaijf&key=868480929&type=data&doctype=json&version=1.1`;
 
-exports.query = function (word) {
+exports.Query = function (word) {
     return new Promise(resolve => {
         superagent.get(url)
             .query({ q: word })
