@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const template = require('./remote_template')
+const { remoteTemplate, dict, helper, calculator } = require('./src/index')
 const PKG = require('./package.json');
-const chalk = require("chalk");
 const ora = require('ora');
-const Table = require('cli-table2') // 表格输出
-const superagent = require('superagent') // http请求 
 
 program
     .version(PKG.version, '-v, -version')
@@ -31,7 +28,7 @@ program
     .description('翻译 [...args]')
     .action(() => {
         const [, ...args] = program.args
-        if (!args.length) return printErr('请输入查询参数')
+        if (!args.length) return helper.printErr('请输入查询参数')
         const word = args.join(' ');
         queryByDictionary(word)
     });
@@ -51,10 +48,10 @@ async function initTemplate() {
         spinner.color = 'cyan';
         if (name === 'koa') {
             spinner.text = '正在安装...';
-            const _path = await template.koaBasicServices()
+            const _path = await remoteTemplate.koaBasicServices()
             spinner.succeed('安装完成!')
             spinner.stop()
-            printMsg([
+            helper.printMsgs([
                 `cd ${_path}`,
                 'yarn 或者 npm install 安装依赖',
                 'yarn dev 启动开发环境'
@@ -63,40 +60,8 @@ async function initTemplate() {
     }
 }
 
-function queryByDictionary(word) {
-    const url = `http://fanyi.youdao.com/openapi.do?keyfrom=toaijf&key=868480929&type=data&doctype=json&version=1.1`;
-
-    superagent.get(url)
-        .query({
-            q: word
-        })
-        .end((err, res) => {
-            if (err) {
-                printErr('excuse me, try again')
-                return false
-            }
-            let data = JSON.parse(res.text);
-            let result = {};
-            // 返回的数据处理
-            if (data.basic) result[word] = data['basic']['explains'];
-            else if (data.translation) result[word] = data['translation'];
-            else printErr('error')
-            // 输出表格
-            let table = new Table();
-            table.push(result);
-            printMsg([table.toString()])
-        })
-}
-
-
-/*//////////////// helper methods /////////////////*/
-
-function printErr(errMsg) {
-    console.log(chalk.red('--', errMsg, '--'));
-}
-
-function printMsg(infos) {
-    infos.forEach(function (info) {
-        console.log(chalk.cyanBright(info));
-    });
+async function queryByDictionary(word) {
+    const { ok, msg } = await dict.query(word)
+    if (ok) helper.printMsg(msg)
+    else helper.printErr(msg)
 }
