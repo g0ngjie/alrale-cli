@@ -41,11 +41,8 @@ async function queryByDictionary() {
 
 function fmtTs() {
     const [, ts] = program.args
-    console.log(typeof ts, 'typeof ts');
-    if (!ts) return print.Error('请输入时间戳')
     const { ok, msg } = date.FmtTimestamp(ts)
     if (ok) print.Message(msg)
-    else print.Error(msg)
 }
 
 /* ========== commander ========== */

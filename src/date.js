@@ -14,21 +14,12 @@ function isNumber(target) {
 }
 
 /**
- * 判断是否位float格式
- * @param target 
- */
-function isFloat(target) {
-    if (!isNumber(target)) return false;
-    return target % 1 !== 0;
-}
-
-/**
  * 整数前置补零
  * @param {number|string} target 
  * @param {number} places 位数，默认2 -> 10
  */
 function prefixZero(target, places = 2) {
-    if (!isNumber(target) || isFloat(target)) return ''
+    if (!isNumber(target)) return ''
     const condition = 10 ** (places - 1)
     if (+target < condition) {
         return (Array(places).join('0') + target).slice(-places)
@@ -41,7 +32,7 @@ function prefixZero(target, places = 2) {
  * @param {String|Number} timestamp 
  */
 function formatTs(timestamp) {
-    if (!isNumber(timestamp)) throw new Error("timestamp is nil");
+    if (!isNumber(timestamp)) timestamp = Date.now()
     let ts = +timestamp;
     // 13位毫(秒) 10位(秒)
     const tsLen = String(timestamp).length
@@ -65,28 +56,17 @@ function formatTs(timestamp) {
     const FullYMD = [year, '-', fullMonth, '-', fullDay, ' ', fullHour, ':', fullMinutes, ':', fullSeconds].join('')
 
     const table = new Table({
-        head: ['\\', '年', '月', '日', '星期', '时', '分', '秒', '毫秒', 'YMD Hms'],
-        colWidths: [4, 6, 6, 6, 6, 6, 6, 6, 10]
+        head: ['\\', '年', '月', '日', '星期', '时', '分', '秒', '毫秒', 'YMD Hms', 'timestamp'],
     })
     table.push(
-        ['简', year, month, day, week, hour, minutes, seconds, milliseconds, YMD],
-        ['繁', year, fullMonth, fullDay, week, fullHour, fullMinutes, fullSeconds, milliseconds, FullYMD]
+        ['简', year, month, day, week, hour, minutes, seconds, milliseconds, YMD, timestamp],
+        ['繁', year, fullMonth, fullDay, week, fullHour, fullMinutes, fullSeconds, milliseconds, FullYMD, timestamp]
     );
     return table.toString()
 }
 
 
 exports.FmtTimestamp = function (ts) {
-    try {
-        const msg = formatTs(ts)
-        return {
-            ok: true,
-            msg
-        }
-    } catch (error) {
-        return {
-            ok: false,
-            msg: error
-        }
-    }
+    const msg = formatTs(ts)
+    return { ok: true, msg }
 }
