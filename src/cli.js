@@ -11,6 +11,7 @@ const {
     date,
     remote,
     os,
+    regular,
 } = require('./index');
 
 /* ========== cmd methods ========== */
@@ -91,6 +92,12 @@ program
     .option('-ip, --ipv4', 'ipv4信息')
     .option('-ip6, --ipv6', 'ipv6信息')
     .action(osFunc);
+
+program
+    .command('regular')
+    .alias('reg')
+    .description('获取常用正则表达式')
+    .action(regular.GetRegs);
 
 program
     .parse(process.argv);

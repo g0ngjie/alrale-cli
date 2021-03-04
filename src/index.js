@@ -17,3 +17,5 @@ exports.date = require('./date')
 exports.util = require('./utils')
 // 系统
 exports.os = require('./os')
+// 正则
+exports.regular = require('./regular')

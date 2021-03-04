@@ -40,7 +40,15 @@ function square(param1, param2) {
 * @param {String} currentOperator 当前运算符
 */
 exports.Calc = async function (first, total, currentOperator) {
-    const initPrompts = [{ type: 'rawlist', name: 'operator', choices: ["+", "-", "*", "/", "**"] }]
+    const initPrompts = [{
+        type: 'rawlist', name: 'operator', choices: [
+            { name: '加', value: '+' },
+            { name: '减', value: '-' },
+            { name: '乘', value: '*' },
+            { name: '除', value: '/' },
+            { name: '平方', value: '**' },
+        ]
+    }]
     const selectConfig = [{ type: 'input', prefix: '<number>|q:quit|s:select|c:clear\n', name: 'target' }]
     let conf = first ? initPrompts : selectConfig
 
