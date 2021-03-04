@@ -31,7 +31,7 @@ async function initTemplate() {
 
 // 查询字典
 async function queryByDictionary() {
-    const [, ...args] = program.args
+    const args = program.args.slice(1)
     if (!args.length) return print.Error('请输入查询参数')
     const word = args.join(' ');
     const { ok, msg } = await dict.Query(word)
@@ -40,7 +40,7 @@ async function queryByDictionary() {
 }
 
 function fmtTs() {
-    const [, ts] = program.args
+    const [ts] = program.args.slice(1)
     const { ok, msg } = date.FmtTimestamp(ts)
     if (ok) print.Message(msg)
 }
