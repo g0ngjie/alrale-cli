@@ -2,10 +2,10 @@
   "name": "@alrale/cli",
   "version": "1.0.7",
   "description": "",
-  "main": "index.js",
+  "main": "cli.js",
   "bin": {
-    "alrale": "index.js",
-    "al": "index.js"
+    "alrale": "cli.js",
+    "al": "cli.js"
   },
   "author": "Gj",
   "license": "MIT",
