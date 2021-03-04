@@ -15,3 +15,5 @@ exports.calc = require('./calc')
 exports.date = require('./date')
 // 工具
 exports.util = require('./utils')
+// 系统
+exports.os = require('./os')

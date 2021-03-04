@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const PKG = require('./package.json');
+const PKG = require('../package.json');
 
 const {
     download,
@@ -9,8 +9,9 @@ const {
     print,
     calc,
     date,
-    remote
-} = require('./src/index');
+    remote,
+    os,
+} = require('./index');
 
 /* ========== cmd methods ========== */
 
@@ -76,6 +77,11 @@ program
     .option('-p, --proverbs', '箴言、言语、格言')
     .option('-b, --bing [limit]', '获取必应壁纸列表')
     .action(remoteFunc);
+
+program
+    .command('os')
+    .description('获取系统参数')
+    .action(os.GetOsInfo);
 
 program
     .parse(process.argv);
