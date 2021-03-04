@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 // 字典
-const Table = require('cli-table2') // 表格输出
 const superagent = require('superagent') // http请求 
+const { GetTable } = require('./utils')
 
 const url = `http://fanyi.youdao.com/openapi.do?keyfrom=toaijf&key=868480929&type=data&doctype=json&version=1.1`;
 
@@ -19,9 +19,8 @@ exports.Query = function (word) {
                 else if (data.translation) result[word] = data['translation'];
                 else resolve({ ok: false, msg: '查询异常' })
                 // 输出表格
-                const table = new Table();
-                table.push(result);
-                resolve({ ok: true, msg: table.toString() })
+                const table = GetTable([result])
+                resolve({ ok: true, msg: table })
             })
     })
 }

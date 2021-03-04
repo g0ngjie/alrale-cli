@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
-const Table = require('cli-table2');
-const { IsNumber, PrefixZero } = require('./utils');
+const { IsNumber, PrefixZero, GetTable } = require('./utils');
 
 /**
  * 格式化时间戳
@@ -31,14 +30,12 @@ function formatTs(timestamp) {
     const YMD = [year, '-', month, '-', day, ' ', hour, ':', minutes, ':', seconds].join('')
     const FullYMD = [year, '-', fullMonth, '-', fullDay, ' ', fullHour, ':', fullMinutes, ':', fullSeconds].join('')
 
-    const table = new Table({
-        head: ['\\', '年', '月', '日', '星期', '时', '分', '秒', '毫秒', 'YMD Hms', 'timestamp'],
-    })
-    table.push(
+    const rows = [
         ['简', year, month, day, week, hour, minutes, seconds, milliseconds, YMD, timestamp],
         ['繁', year, fullMonth, fullDay, week, fullHour, fullMinutes, fullSeconds, milliseconds, FullYMD, timestamp]
-    );
-    return table.toString()
+    ]
+    const head = ['\\', '年', '月', '日', '星期', '时', '分', '秒', '毫秒', 'YMD Hms', 'timestamp']
+    return GetTable(rows, head)
 }
 
 exports.FmtTimestamp = function (ts) {

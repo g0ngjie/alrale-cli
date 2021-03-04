@@ -2,6 +2,8 @@
 
 const inquirer = require('inquirer')
 const https = require('https')
+const http = require('http')
+const Table = require('cli-table2');
 
 /**非负浮点数（正浮点数 + 0） */
 const NotNegativeFloatReg = /^\d+(\.\d+)?$/;
@@ -57,20 +59,51 @@ exports.Inquirer = function (prompts = []) {
 }
 
 /**
- * Get请求
+ * https.Get请求
  * @param {String} url 
  */
-exports.Get = function (url) {
+exports.HttpsGet = function (url) {
     return new Promise(resolve => {
         https.get(url, function (e) {
             if (e.statusCode === 200) {
                 e.on('data', function (data) {
-                    const { hitokoto, from } = JSON.parse(data)
-                    resolve({ ok: true, data: `${hitokoto} ———— ${from}` })
+                    resolve({ ok: true, data })
                 })
             } else resolve({ ok: false, msg: e.statusMessage })
         }).on('error', function (err) {
             resolve({ ok: false, msg: err.message })
         })
     })
+}
+
+/**
+ * http.Get请求
+ * @param {String} url 
+ */
+exports.HttpGet = function (url) {
+    return new Promise(resolve => {
+        http.get(url, function (e) {
+            if (e.statusCode === 200) {
+                e.on('data', function (data) {
+                    resolve({ ok: true, data })
+                })
+            } else resolve({ ok: false, msg: e.statusMessage })
+        }).on('error', function (err) {
+            resolve({ ok: false, msg: err.message })
+        })
+    })
+}
+
+/**
+ * 表格
+ * @param {Array} rows 
+ * @param {Array|undefined} head 
+ */
+exports.GetTable = function (rows, head) {
+    const table = new Table({ head })
+    for (let i = 0; i < rows.length; i++) {
+        const row = rows[i];
+        table.push(row)
+    }
+    return table.toString()
 }

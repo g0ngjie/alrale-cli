@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 const os = require('os')
-const Table = require('cli-table2');
 const print = require('./print')
+const { GetTable } = require('./utils')
 
 /**
  * 获取系统参数
@@ -25,21 +25,20 @@ exports.GetOsInfo = function () {
     const _freemem = (freemem() / (1 << 30)).toFixed(2)
     const _totalmem = (totalmem() / (1 << 30)).toFixed(2)
 
-    const table = new Table({
-        head: [
-            'cpu',
-            '处理器架构',
-            '核数',
-            '空闲内存字节',
-            '主机名',
-            '操作系统类型',
-            '操作系统版本',
-            '系统总内存',
-            '操作系统名称'
-        ]
-    })
-    table.push([model, arch(), _cpuNumber, _freemem, hostname(), platform(), release(), _totalmem, type()]);
-    print.Message(table.toString())
+    const row = [model, arch(), _cpuNumber, _freemem, hostname(), platform(), release(), _totalmem, type()]
+    const head = [
+        'cpu',
+        '处理器架构',
+        '核数',
+        '空闲内存字节',
+        '主机名',
+        '操作系统类型',
+        '操作系统版本',
+        '系统总内存',
+        '操作系统名称'
+    ]
+    const table = GetTable([row], head)
+    print.Message(table)
 }
 
 /**
@@ -48,7 +47,7 @@ exports.GetOsInfo = function () {
  */
 exports.GetIp = function (type) {
     const networks = os.networkInterfaces()
-    const list = []
+    const rows = []
     Object.keys(networks).forEach(key => {
         const cacheList = []
         networks[key].forEach(item => {
@@ -56,10 +55,9 @@ exports.GetIp = function (type) {
             // IPv4
             if (family.includes(type)) cacheList.push([key, family, cidr])
         })
-        list.push(...cacheList)
+        rows.push(...cacheList)
     })
-
-    const table = new Table()
-    table.push(...list);
-    print.Message(table.toString())
+    
+    const table = GetTable(rows)
+    print.Message(table)
 }

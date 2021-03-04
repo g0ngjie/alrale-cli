@@ -82,7 +82,7 @@ program
     .alias('r')
     .description('远程获取, default: 获取一言数据')
     .option('-p, --proverbs', '箴言、言语、格言')
-    .option('-b, --bing [limit]', '获取必应壁纸列表')
+    .option('-b, --bing [page]', '获取必应壁纸列表 [page]页数')
     .action(remoteFunc);
 
 program
