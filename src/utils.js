@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const inquirer = require('inquirer')
+const https = require('https')
 
 /**非负浮点数（正浮点数 + 0） */
 const NotNegativeFloatReg = /^\d+(\.\d+)?$/;
@@ -52,5 +53,24 @@ exports.Inquirer = function (prompts = []) {
                 if (error.isTtyError) resolve({ ok: false, msg: '不能在当前环境下呈现' })
                 else resolve({ ok: false, msg: error + '' })
             });
+    })
+}
+
+/**
+ * Get请求
+ * @param {String} url 
+ */
+exports.Get = function (url) {
+    return new Promise(resolve => {
+        https.get(url, function (e) {
+            if (e.statusCode === 200) {
+                e.on('data', function (data) {
+                    const { hitokoto, from } = JSON.parse(data)
+                    resolve({ ok: true, data: `${hitokoto} ———— ${from}` })
+                })
+            } else resolve({ ok: false, msg: e.statusMessage })
+        }).on('error', function (err) {
+            resolve({ ok: false, msg: err.message })
+        })
     })
 }

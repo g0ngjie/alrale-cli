@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 
 // 模板下载
-exports.remoteTemplate = require('./remote_template')
+exports.download = require('./download')
 // 字典
 exports.dict = require('./dict')
 // 箴言、言语、格言
-exports.proverbs = require('./proverbs')
+// bing壁纸
+exports.remote = require('./remote')
 // print
 exports.print = require('./print')
 // 计算器

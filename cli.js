@@ -3,7 +3,14 @@
 const program = require('commander');
 const PKG = require('./package.json');
 
-const { remoteTemplate: Rt, dict, print, calc, date } = require('./src/index');
+const {
+    download,
+    dict,
+    print,
+    calc,
+    date,
+    remote
+} = require('./src/index');
 
 /* ========== cmd methods ========== */
 
@@ -23,6 +30,15 @@ function fmtTs() {
     if (ok) print.Message(msg)
 }
 
+// 远程获取数据
+function remoteFunc(cmd) {
+    if (cmd.proverbs) remote.GetProverbs()
+    else if (cmd.bing) {
+        const [limit] = program.args.slice(2)
+        remote.GetBingImgList(limit)
+    } else remote.GetProverbs()
+}
+
 /* ========== commander ========== */
 program
     .version(PKG.version, '-v, -version')
@@ -35,7 +51,7 @@ program
 program
     .command('init')
     .description('初始化模板')
-    .action(Rt.InitTemplate)
+    .action(download.InitTemplate)
 
 program
     .command('q <word|expressions>')
@@ -52,6 +68,14 @@ program
     .alias('c')
     .description('计算器')
     .action(() => calc.Calc(true));
+
+program
+    .command('remote')
+    .alias('r')
+    .description('远程获取, default: 获取一言数据')
+    .option('-p, --proverbs', '箴言、言语、格言')
+    .option('-b, --bing [limit]', '获取必应壁纸列表')
+    .action(remoteFunc);
 
 program
     .parse(process.argv);
