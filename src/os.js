@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const os = require('os')
 const Table = require('cli-table2');
 const { print } = require('.');
