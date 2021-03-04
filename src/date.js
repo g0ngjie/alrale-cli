@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const Table = require('cli-table2');
 const { IsNumber, PrefixZero } = require('./utils');
 

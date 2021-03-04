@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const inquirer = require('inquirer')
 
 /**非负浮点数（正浮点数 + 0） */

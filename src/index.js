@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 
 // 模板下载
 exports.remoteTemplate = require('./remote_template')

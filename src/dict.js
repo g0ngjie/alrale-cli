@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // 字典
 const Table = require('cli-table2') // 表格输出
 const superagent = require('superagent') // http请求 

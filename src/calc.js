@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // 计算器
 
 function convert(input) {
