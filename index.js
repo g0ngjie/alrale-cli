@@ -135,7 +135,6 @@ program
 program
     .command('ts [timestamp]')
     .description('格式化时间戳,默认查询当前时间')
-    .option("-s, --setup_mode [mode]", "Which setup mode to use")
     .action(() => fmtTs());
 
 program
