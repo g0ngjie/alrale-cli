@@ -40,6 +40,13 @@ function remoteFunc(cmd) {
     } else remote.GetProverbs()
 }
 
+// 获取系统信息
+function osFunc(cmd) {
+    if (cmd.ipv4) os.GetIp(4)
+    else if (cmd.ipv6) os.GetIp(6)
+    else os.GetOsInfo()
+}
+
 /* ========== commander ========== */
 program
     .version(PKG.version, '-v, -version')
@@ -81,7 +88,9 @@ program
 program
     .command('os')
     .description('获取系统参数')
-    .action(os.GetOsInfo);
+    .option('-ip, --ipv4', 'ipv4信息')
+    .option('-ip6, --ipv6', 'ipv6信息')
+    .action(osFunc);
 
 program
     .parse(process.argv);
