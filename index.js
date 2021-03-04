@@ -3,7 +3,6 @@
 const program = require('commander');
 const PKG = require('./package.json');
 const ora = require('ora');
-const readline = require('readline');
 const { remoteTemplate, dict, print, calc, date, util } = require('./src/index');
 
 /* ========== cmd methods ========== */
@@ -56,61 +55,59 @@ function fmtTs() {
     if (ok) print.Message(msg)
 }
 
-// 计算器
-function calcFunc() {
+/**
+ * 计算器
+ * @param {Boolean} first 第一次
+ * @param {Number} total 计算数
+ * @param {String} currentOperator 当前运算符
+ */
+async function calcFunc(first, total, currentOperator) {
+    const initPrompts = [{ type: 'list', name: 'operator', choices: ["+", "-", "*", "/", "**"] }]
+    const selectConfig = [{ type: 'input', prefix: '<number>|e:exit|s:select', name: 'target' }]
+    let conf = first ? initPrompts : selectConfig
 
-    // const rl = readline.createInterface({
-    //     input: process.stdin,
-    //     output: process.stdout
-    // });
-
-    // rl.on('line', function (line) {
-    //     let count;
-    //     if (line === 'exit' || line === 'e') {
-    //         print.Message('--退出--')
-    //         process.exit(0)
-    //     }
-
-    //     Inquirer([{
-    //         type: 'list',
-    //         message: '计算方式:',
-    //         name: 'symbol',
-    //         choices: ["+", "-", "*", "/", "**"],
-    //     }]).then(({ ok, msg, data }) => {
-    //         if (ok) {
-    //             const { symbol } = data
-    //             console.log('[debug]symbol-> ', symbol);
-    //         }
-    //         else print.Error(msg)
-    //     })
-    // })
-
-    // rl.on('close', function() {
-    //     count = void 0
-    //     process.exit(0);
-    // })
-    // return
-    let result
-    const [a, operator, b] = program.args.slice(1)
-    if (!a || !operator || !b) return print.Error('查询格式不正确，a [symbol] b')
-    switch (operator) {
-        case '+':
-            result = calc.Add(a, b);
-            break;
-        case '-':
-            result = calc.Subtract(a, b);
-            break;
-        case '*':
-            result = calc.Mutiply(a, b);
-            break;
-        case '/':
-            result = calc.Divide(a, b);
-            break;
-        default:
-            print.Error('符号不正确')
-            break;
+    const { ok, msg, data } = await util.Inquirer(conf);
+    if (ok) {
+        const { operator, target } = data;
+        if (operator) currentOperator = operator
+        else if (target) {
+            // 退出
+            if (target === 'e') {
+                print.Message('exit!')
+                process.exit(0)
+            }
+            else if (target === 's') {
+                calcFunc(true, total)
+                return
+            }
+            if (!total) total = +target
+            if (!util.IsNumber(target)) print.Error('类型不正确')
+            else if (total) {
+                switch (currentOperator) {
+                    case '+':
+                        total = calc.Add(total, +target)
+                        break;
+                    case '-':
+                        total = calc.Subtract(total, +target)
+                        break;
+                    case '*':
+                        total = calc.Mutiply(total, +target)
+                        break;
+                    case '/':
+                        total = calc.Divide(total, +target)
+                        break;
+                    case '**':
+                        total = calc.Square(+total, +target)
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
-    print.Message(result)
+    else print.Error(msg)
+    if (total) print.Message(total)
+    calcFunc(false, total, currentOperator)
 }
 
 /* ========== commander ========== */
@@ -130,18 +127,18 @@ program
 program
     .command('q <word|expressions>')
     .description('翻译,查询中|英文单词，词句')
-    .action(() => queryByDictionary());
+    .action(queryByDictionary);
 
 program
     .command('ts [timestamp]')
     .description('格式化时间戳,默认查询当前时间')
-    .action(() => fmtTs());
+    .action(fmtTs);
 
 program
     .command('calc')
     .alias('c')
-    .description('计算器 [a +|-|*|/ b]')
-    .action(() => calcFunc());
+    .description('计算器')
+    .action(() => calcFunc(true));
 
 program
     .parse(process.argv);
