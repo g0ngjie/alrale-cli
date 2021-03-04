@@ -8,6 +8,8 @@ exports.proverbs = require('./proverbs')
 // print
 exports.print = require('./print')
 // 计算器
-exports.calculator = require('./calculator')
+exports.calc = require('./calc')
 // 日期
 exports.date = require('./date')
+// 工具
+exports.util = require('./utils')
