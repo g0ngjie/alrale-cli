@@ -3,6 +3,9 @@
 const download = require("download-git-repo");
 const path = require("path");
 const rimraf = require("rimraf");
+const ora = require('ora');
+const util = require('./utils')
+const print = require('./print')
 
 function downloadTemplate(url, target) {
     const dir = path.join(process.cwd(), target); //这里可以自定义下载的地址
@@ -15,8 +18,46 @@ function downloadTemplate(url, target) {
     })
 }
 
-exports.KoaBasicServices = function() {
+/**
+ * 下载koa2模板
+ */
+function koaBasicServices() {
     const url = 'https://gitee.com:gjwork/koa2-basic-services-template#master'
     const dir = 'koa2-basic-services-template'
     return downloadTemplate(url, dir)
+}
+
+/**
+ * 模板下载
+ */
+exports.InitTemplate = async function () {
+    const { ok, msg, data } = await util.Inquirer([{
+        type: 'list',
+        message: '模板选择',
+        name: 'template',
+        choices: ["koa2-basic-template"],
+    }])
+
+    if (!ok) return print.Error(msg)
+    const spinner = ora('Loading...').start();
+    spinner.color = 'cyan';
+    spinner.text = '正在安装...';
+    const { template } = data;
+    let successMsg = []
+    // 下载koa模板
+    switch (template) {
+        case 'koa2-basic-template':
+            const _path = await koaBasicServices()
+            successMsg = [
+                `cd ${_path}`,
+                'yarn 或者 npm install 安装依赖',
+                'yarn dev 启动开发环境'
+            ]
+            break;
+        default:
+            break;
+    }
+    spinner.succeed('安装完成!')
+    spinner.stop()
+    print.Messages(successMsg)
 }
