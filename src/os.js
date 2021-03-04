@@ -2,7 +2,7 @@
 
 const os = require('os')
 const Table = require('cli-table2');
-const { print } = require('.');
+const print = require('./print')
 
 /**
  * 获取系统参数

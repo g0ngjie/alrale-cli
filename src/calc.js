@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const { print } = require(".");
 const util = require('./utils')
+const print = require('./print')
 
 // 计算器
 
