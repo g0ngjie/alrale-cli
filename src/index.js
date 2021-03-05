@@ -19,3 +19,5 @@ exports.util = require('./utils')
 exports.os = require('./os')
 // 正则
 exports.regular = require('./regular')
+// 字节
+exports.byte = require('./byte')

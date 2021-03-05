@@ -12,6 +12,7 @@ const {
     remote,
     os,
     regular,
+    byte,
 } = require('./index');
 
 /* ========== cmd methods ========== */
@@ -98,6 +99,11 @@ program
     .alias('reg')
     .description('获取常用正则表达式')
     .action(regular.GetRegs);
+
+program
+    .command('byte')
+    .description('字节转换')
+    .action(byte.ByteFmt);
 
 program
     .parse(process.argv);
