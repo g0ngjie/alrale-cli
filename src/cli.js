@@ -13,6 +13,7 @@ const {
     os,
     regular,
     byte,
+    shell,
 } = require('./index');
 
 /* ========== cmd methods ========== */
@@ -47,6 +48,17 @@ function osFunc(cmd) {
     if (cmd.ipv4) os.GetIp(4)
     else if (cmd.ipv6) os.GetIp(6)
     else os.GetOsInfo()
+}
+
+// shell 操作
+async function shellFunc(cmd) {
+    switch (cmd.ls) {
+        case 'npm':
+            shell.ShowGlobalNpm()
+            break;
+        default:
+            break;
+    }
 }
 
 /* ========== commander ========== */
@@ -104,6 +116,12 @@ program
     .command('byte')
     .description('字节转换')
     .action(byte.ByteFmt);
+
+program
+    .command('cmd')
+    .description('shell 操作')
+    .option('-l, --ls [args]', '查询')
+    .action(shellFunc);
 
 program
     .parse(process.argv);

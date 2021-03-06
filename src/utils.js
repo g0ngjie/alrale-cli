@@ -3,7 +3,10 @@
 const inquirer = require('inquirer')
 const https = require('https')
 const http = require('http')
+const { spawn } = require('child_process');
 const Table = require('cli-table2');
+const os = require('os')
+const ora = require('ora');
 
 /**非负浮点数（正浮点数 + 0） */
 const NotNegativeFloatReg = /^\d+(\.\d+)?$/;
@@ -106,4 +109,46 @@ exports.GetTable = function (rows, head) {
         table.push(row)
     }
     return table.toString()
+}
+
+/**
+ * 获取平台
+ */
+exports.GetPlatform = function () {
+    const platform = os.platform();
+    const current = {
+        aix: 'IBM AIX',
+        android: 'Android',
+        darwin: 'Apple',
+        freebsd: 'FreeBSD',
+        linux: 'Linux',
+        openbsd: 'OpenBSD',
+        sunos: 'SunOS',
+        win32: 'Windows',
+    }[platform] || 'unknown'
+    return {
+        isWindow: current === 'Windows',
+        isApple: current === 'Apple',
+        isLinux: current === 'Linux',
+        infos: current
+    }
+}
+/**
+ * 执行shell命令
+ * @param {String} command 命令
+ * @param {Array} args 参数
+ * @returns 
+ */
+exports.Shell = function (command, args, options) {
+    return new Promise(resolve => {
+        const spinner = ora().start();
+        spinner.color = 'cyan';
+        const shell = spawn(command, args, options)
+        shell.stdout.on('data', data => resolve({ ok: true, data: data.toString() }))
+        shell.stdout.on('end', () => spinner.stop())
+        shell.stdout.on('error', err => {
+            spinner.stop()
+            resolve({ ok: false, msg: err.message })
+        })
+    })
 }

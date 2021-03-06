@@ -21,3 +21,5 @@ exports.os = require('./os')
 exports.regular = require('./regular')
 // 字节
 exports.byte = require('./byte')
+// shell
+exports.shell = require('./shell')
