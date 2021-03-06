@@ -14,6 +14,7 @@ const {
     regular,
     byte,
     shell,
+    pipe,
 } = require('./index');
 
 /* ========== cmd methods ========== */
@@ -59,6 +60,14 @@ async function shellFunc(cmd) {
         default:
             break;
     }
+}
+
+// 管道符
+function pipeFunc(cmd) {
+    if (cmd.table) return pipe.ShowTable()
+    if (cmd.list) return pipe.Show()
+    const [target] = program.args.slice(1)
+    if (target) pipe.GetCMD(target)
 }
 
 /* ========== commander ========== */
@@ -122,6 +131,14 @@ program
     .description('shell 操作')
     .option('-l, --ls [args]', '查询')
     .action(shellFunc);
+
+program
+    .command('pipe')
+    .alias('p')
+    .option('-l, --list', '查看所有命令 (| grep [option])')
+    .option('-t, --table', '表格查看所有命令')
+    .description('管道符常用命令 (| xargs [options] <command>)')
+    .action(pipeFunc);
 
 program
     .parse(process.argv);

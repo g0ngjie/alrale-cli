@@ -23,3 +23,5 @@ exports.regular = require('./regular')
 exports.byte = require('./byte')
 // shell
 exports.shell = require('./shell')
+// 管道符
+exports.pipe = require('./pipe')
