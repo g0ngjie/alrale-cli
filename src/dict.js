@@ -3,14 +3,18 @@
 // 字典
 const superagent = require('superagent') // http请求 
 const { GetTable } = require('./utils')
+const ora = require('ora');
 
 const url = `http://fanyi.youdao.com/openapi.do?keyfrom=toaijf&key=868480929&type=data&doctype=json&version=1.1`;
 
 exports.Query = function (word) {
     return new Promise(resolve => {
+        const spinner = ora().start();
+        spinner.color = 'cyan';
         superagent.get(url)
             .query({ q: word })
             .end((err, res) => {
+                spinner.stop()
                 if (err) resolve({ ok: false, msg: '对不起,再试一次' })
                 let data = JSON.parse(res.text);
                 let result = {};
