@@ -7,6 +7,10 @@
     "alrale": "lib/cli.js",
     "al": "lib/cli.js"
   },
+  "keywords": [
+    "alrale",
+    "cli"
+  ],
   "files": [
     "lib"
   ],
