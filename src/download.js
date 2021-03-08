@@ -28,6 +28,15 @@ function koaBasicServices() {
 }
 
 /**
+ * 下载vue2-element-ui模板
+ */
+function vue2BasicElementUI() {
+    const url = 'https://gitee.com:gjwork/vue2-basic-element-ui-template#master'
+    const dir = 'vue2-basic-element-ui-template'
+    return downloadTemplate(url, dir)
+}
+
+/**
  * 模板下载
  */
 exports.InitTemplate = async function () {
@@ -35,7 +44,7 @@ exports.InitTemplate = async function () {
         type: 'list',
         message: '模板选择',
         name: 'template',
-        choices: ["koa2-basic-template"],
+        choices: ["koa2-basic-template", "vue2-basic-element-ui-template"],
     }])
 
     if (!ok) return print.Error(msg)
@@ -47,11 +56,19 @@ exports.InitTemplate = async function () {
     // 下载koa模板
     switch (template) {
         case 'koa2-basic-template':
-            const _path = await koaBasicServices()
+            const koa2_path = await koaBasicServices()
             successMsg = [
-                `cd ${_path}`,
+                `cd ${koa2_path}`,
                 'yarn 或者 npm install 安装依赖',
                 'yarn dev 启动开发环境'
+            ]
+            break;
+        case 'vue2-basic-element-ui-template':
+            const vue2_path = await vue2BasicElementUI()
+            successMsg = [
+                `cd ${vue2_path}`,
+                'yarn 或者 npm install 安装依赖',
+                'yarn serve 启动开发环境'
             ]
             break;
         default:
