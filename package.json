@@ -1,6 +1,6 @@
 {
   "name": "@alrale/cli",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Terminal command tool",
   "main": "lib/cli.js",
   "bin": {
