@@ -162,8 +162,10 @@ exports.Shell = function (command, args, options) {
  * @param {Strubg} target 
  * @returns 
  */
-exports.DownloadTemplate = function (url, target) {
-    const dir = path.join(process.cwd(), target); //这里可以自定义下载的地址
+exports.DownloadTemplate = function (url, target, private = false) {
+    let dir;
+    if (private) dir = target
+    else dir = path.join(process.cwd(), target); //这里可以自定义下载的地址
     rimraf.sync(dir, {});  //在下载前需要保证路径下没有同名文件
     return new Promise((resolve, reject) => {
         download(url, target, { clone: true }, (err) => {

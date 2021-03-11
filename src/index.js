@@ -25,3 +25,5 @@ exports.byte = require('./byte')
 exports.shell = require('./shell')
 // 管道符
 exports.pipe = require('./pipe')
+// 网站
+exports.websit = require('./websit')

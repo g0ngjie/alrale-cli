@@ -15,6 +15,7 @@ const {
     byte,
     shell,
     pipe,
+    websit,
 } = require('./index');
 
 /* ========== cmd methods ========== */
@@ -68,6 +69,13 @@ function pipeFunc(cmd) {
     if (cmd.list) return pipe.Show()
     const [target] = program.args.slice(1)
     if (target) pipe.GetCMD(target)
+}
+
+// 常用网站
+function openFunc(keywords, cmd) {
+    if (cmd.fetch) websit.RemoteFetch()
+    else if (keywords) websit.Open(keywords)
+    else if (cmd.t) websit.ShowAll()
 }
 
 /* ========== commander ========== */
@@ -139,6 +147,14 @@ program
     .option('-t, --table', '表格查看所有命令')
     .description('管道符常用命令 (| xargs [options] <command>)')
     .action(pipeFunc);
+
+program
+    .command('open [keywords]')
+    .alias('o')
+    .option('-t', '查看所有')
+    .option('-f, --fetch', '远端获取最新')
+    .description('常用网站\ncommand:\n[al o -t 查看所有]\n[al o gitee 打开gitee]')
+    .action(openFunc);
 
 program
     .parse(process.argv);
