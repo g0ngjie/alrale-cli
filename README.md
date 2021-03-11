@@ -22,6 +22,7 @@
   - <a href="#pipe-table">-t</a> 表格查看
   - <a href="#pipe-list">-l</a> 列表查看
   - <a href="#pipe-execute">execute</a> 执行
+- <a href="#website">website</a> 常用网站
 
 
 
@@ -286,5 +287,23 @@ $ al p npm | xargs npm
 C:\Users\gongjie\AppData\Roaming\npm
 +-- @alrale/cli@1.0.17
 ...
+```
+
+
+
+### <a id="website">Website</a> 常用网站
+
+```shell
+$ al o -h
+常用网站
+command:
+[al o -t 查看所有]
+[al o gitee 打开gitee]
+
+Options:
+  -t           查看所有
+  -f, --fetch  远端获取最新
+  
+$ al open github # open github websit
 ```
 

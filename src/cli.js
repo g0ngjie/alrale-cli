@@ -15,7 +15,7 @@ const {
     byte,
     shell,
     pipe,
-    websit,
+    website,
 } = require('./index');
 
 /* ========== cmd methods ========== */
@@ -73,9 +73,9 @@ function pipeFunc(cmd) {
 
 // 常用网站
 function openFunc(keywords, cmd) {
-    if (cmd.fetch) websit.RemoteFetch()
-    else if (keywords) websit.Open(keywords)
-    else if (cmd.t) websit.ShowAll()
+    if (cmd.fetch) website.RemoteFetch()
+    else if (keywords) website.Open(keywords)
+    else if (cmd.t) website.ShowAll()
 }
 
 /* ========== commander ========== */
