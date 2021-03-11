@@ -4,7 +4,7 @@ const program = require('commander');
 const PKG = require('../package.json');
 
 const {
-    download,
+    template,
     dict,
     print,
     calc,
@@ -82,7 +82,7 @@ program
 program
     .command('init')
     .description('初始化模板')
-    .action(download.InitTemplate)
+    .action(template.InitTemplate)
 
 program
     .command('q <word|expressions>')

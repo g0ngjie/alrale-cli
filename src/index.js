@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // 模板下载
-exports.download = require('./download')
+exports.template = require('./template')
 // 字典
 exports.dict = require('./dict')
 // 箴言、言语、格言

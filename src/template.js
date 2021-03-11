@@ -1,22 +1,8 @@
 #!/usr/bin/env node
 
-const download = require("download-git-repo");
-const path = require("path");
-const rimraf = require("rimraf");
 const ora = require('ora');
 const util = require('./utils')
 const print = require('./print')
-
-function downloadTemplate(url, target) {
-    const dir = path.join(process.cwd(), target); //这里可以自定义下载的地址
-    rimraf.sync(dir, {});  //在下载前需要保证路径下没有同名文件
-    return new Promise((resolve, reject) => {
-        download(url, target, { clone: true }, (err) => {
-            if (err) reject(err)
-            else resolve(target)
-        })
-    })
-}
 
 /**
  * 下载koa2模板
@@ -24,7 +10,7 @@ function downloadTemplate(url, target) {
 function koaBasicServices(custom) {
     const url = 'https://gitee.com:gjwork/koa2-basic-services-template#master'
     const dir = custom === '[default]' ? 'koa2-basic-services-template' : custom
-    return downloadTemplate(url, dir)
+    return util.DownloadTemplate(url, dir)
 }
 
 /**
@@ -33,7 +19,7 @@ function koaBasicServices(custom) {
 function vue2BasicElementUI(custom) {
     const url = 'https://gitee.com:gjwork/vue2-basic-element-ui-template#master'
     const dir = custom === '[default]' ? 'vue2-basic-element-ui-template' : custom
-    return downloadTemplate(url, dir)
+    return util.DownloadTemplate(url, dir)
 }
 
 /**

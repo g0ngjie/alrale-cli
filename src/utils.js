@@ -7,6 +7,9 @@ const { spawn } = require('child_process');
 const Table = require('cli-table2');
 const os = require('os')
 const ora = require('ora');
+const download = require("download-git-repo");
+const path = require("path");
+const rimraf = require("rimraf");
 
 /**非负浮点数（正浮点数 + 0） */
 const NotNegativeFloatReg = /^\d+(\.\d+)?$/;
@@ -149,6 +152,23 @@ exports.Shell = function (command, args, options) {
         shell.stdout.on('error', err => {
             spinner.stop()
             resolve({ ok: false, msg: err.message })
+        })
+    })
+}
+
+/**
+ * 模板下载
+ * @param {String} url 
+ * @param {Strubg} target 
+ * @returns 
+ */
+exports.DownloadTemplate = function (url, target) {
+    const dir = path.join(process.cwd(), target); //这里可以自定义下载的地址
+    rimraf.sync(dir, {});  //在下载前需要保证路径下没有同名文件
+    return new Promise((resolve, reject) => {
+        download(url, target, { clone: true }, (err) => {
+            if (err) reject(err)
+            else resolve(target)
         })
     })
 }
