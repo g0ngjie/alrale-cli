@@ -28,7 +28,7 @@ exports.ShowAll = async function () {
     const files = require(`${CachePath}/websit.js`);
     const json = (files || []).map(item => {
         const { keywords, url, description } = item || {};
-        return `${description}[${(keywords || []).join()}]\n${chalk.green(url)}\n`
+        return `${description} [${(keywords || []).join()}] ${chalk.green(url)}\n`
     })
     print.Messages(json)
 }
