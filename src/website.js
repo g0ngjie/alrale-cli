@@ -5,6 +5,7 @@ const path = require('path');
 const print = require('./print');
 const open = require('open');
 const fs = require('fs');
+const chalk = require("chalk");
 
 // 缓存目录
 const CachePath = path.join(__dirname, '..', '.cache/note')
@@ -27,7 +28,7 @@ exports.ShowAll = async function () {
     const files = require(`${CachePath}/websit.js`);
     const json = (files || []).map(item => {
         const { keywords, url, description } = item || {};
-        return `${(keywords || []).join()} ${url} ${description}`
+        return `${description}[${(keywords || []).join()}]\n${chalk.green(url)}\n`
     })
     print.Messages(json)
 }
