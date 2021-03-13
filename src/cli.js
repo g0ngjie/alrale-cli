@@ -72,7 +72,8 @@ function pipeFunc(cmd) {
 }
 
 // 常用网站
-function openFunc(keywords, cmd) {
+async function openFunc(keywords, cmd) {
+    await website.SyncConfig();
     if (cmd.fetch) website.RemoteFetch()
     else if (keywords) website.Open(keywords)
     else if (cmd.t) website.ShowAll()

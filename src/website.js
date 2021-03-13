@@ -16,9 +16,55 @@ async function fetchSync() {
     if (!exists) await exports.RemoteFetch()
 }
 
+const WEBSITE_KEY = 'websit';
+
+/**同步配置 */
+exports.SyncConfig = async function () {
+    const { ok } = await util.GetConfig(WEBSITE_KEY);
+    if (!ok) {
+        const { ok, msg, data } = await util.Inquirer([
+            {
+                type: 'input',
+                message: '请输入git仓库托管地址',
+                default: 'https://gitee.com',
+                name: 'git_url',
+            }, {
+                type: 'input',
+                message: 'owner(作者)',
+                name: 'owner',
+                default: 'gjwork'
+            }, {
+                type: 'input',
+                message: 'name(项目名)',
+                name: 'name',
+                default: 'note',
+            }, {
+                type: 'input',
+                message: 'branch(分支)',
+                name: 'branch',
+                default: 'master'
+            }
+        ]);
+        if (!ok) {
+            print.Error(msg);
+            process.exit(1);
+        }
+        const { git_url, owner, name, branch } = data;
+        const { ok: isOk, msg: err } = await util.SetConfig({ [WEBSITE_KEY]: `${git_url}:${owner}/${name}#${branch}` });
+        if (!isOk) {
+            print.Error(err);
+            process.exit(1)
+        }
+    }
+}
+
 /**远端获取最新 */
-exports.RemoteFetch = function () {
-    const url = 'https://gitee.com:gjwork/note#master'
+exports.RemoteFetch = async function () {
+    const { ok, data: url, msg } = await util.GetConfig(WEBSITE_KEY);
+    if (!ok) {
+        print.Error(msg)
+        process.exit(1)
+    }
     return util.DownloadTemplate(url, CachePath, true)
 }
 

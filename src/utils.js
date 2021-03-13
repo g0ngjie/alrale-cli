@@ -10,6 +10,7 @@ const ora = require('ora');
 const download = require("download-git-repo");
 const path = require("path");
 const rimraf = require("rimraf");
+const fs = require('fs');
 
 /**非负浮点数（正浮点数 + 0） */
 const NotNegativeFloatReg = /^\d+(\.\d+)?$/;
@@ -159,7 +160,7 @@ exports.Shell = function (command, args, options) {
 /**
  * 模板下载
  * @param {String} url 
- * @param {Strubg} target 
+ * @param {String} target 
  * @returns 
  */
 exports.DownloadTemplate = function (url, target, private = false) {
@@ -173,4 +174,59 @@ exports.DownloadTemplate = function (url, target, private = false) {
             else resolve(target)
         })
     })
+}
+
+// 本地cache config
+const CONFIG_FILE = path.join(__dirname, '..', '.config.json');
+
+/**
+ * 获取本地配置
+ * @param {String} key 
+ * @returns 
+ */
+exports.GetConfig = async function (key) {
+    try {
+        const exists = fs.existsSync(CONFIG_FILE);
+        if (!exists) {
+            // 创建文件
+            fs.writeFileSync(CONFIG_FILE, '', { encoding: 'utf8' });
+            return { ok: false, msg: '未有配置文件' }
+        } else {
+            const read_file = fs.readFileSync(CONFIG_FILE, { encoding: 'utf8' });
+            if (read_file) {
+                const get_data = JSON.parse(read_file)[key];
+                if (get_data) return { ok: true, data: get_data };
+                return { ok: false, msg: '空' };
+            }
+            return { ok: true, msg: '未有配置' };
+        }
+    } catch (error) {
+        return { ok: false, msg: '异常' }
+    }
+}
+
+/**
+ * 配置本地用户配置
+ * @param {Object} data 
+ */
+exports.SetConfig = async function (data = {}) {
+    try {
+        const exists = fs.existsSync(CONFIG_FILE);
+        // 创建文件
+        if (!exists) fs.writeFileSync(CONFIG_FILE, '', { encoding: 'utf8' });
+        const read_file = fs.readFileSync(CONFIG_FILE, { encoding: 'utf8' });
+        if (read_file) {
+            const _json = JSON.parse(read_file);
+            const put_data = { ..._json, ...data };
+            // 追加
+            fs.writeFileSync(CONFIG_FILE, JSON.stringify(put_data), { encoding: 'utf8' });
+            return { ok: true };
+        } else {
+            // 初始化配置
+            fs.writeFileSync(CONFIG_FILE, JSON.stringify(data), { encoding: 'utf8' });
+            return { ok: true }
+        }
+    } catch (error) {
+        return { ok: false, msg: '异常' };
+    }
 }
