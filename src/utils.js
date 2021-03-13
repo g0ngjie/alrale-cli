@@ -219,11 +219,11 @@ exports.SetConfig = async function (data = {}) {
             const _json = JSON.parse(read_file);
             const put_data = { ..._json, ...data };
             // 追加
-            fs.writeFileSync(CONFIG_FILE, JSON.stringify(put_data), { encoding: 'utf8' });
+            fs.writeFileSync(CONFIG_FILE, JSON.stringify(put_data, '', '\t'), { encoding: 'utf8' });
             return { ok: true };
         } else {
             // 初始化配置
-            fs.writeFileSync(CONFIG_FILE, JSON.stringify(data), { encoding: 'utf8' });
+            fs.writeFileSync(CONFIG_FILE, JSON.stringify(data, '', '\t'), { encoding: 'utf8' });
             return { ok: true }
         }
     } catch (error) {
