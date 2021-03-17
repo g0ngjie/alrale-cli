@@ -23,6 +23,7 @@
   - <a href="#pipe-list">-l</a> 列表查看
   - <a href="#pipe-execute">execute</a> 执行
 - <a href="#website">website</a> 常用网站
+- <a href="#doc">doc</a> 接口文档转换
 
 
 
@@ -305,5 +306,16 @@ Options:
   -f, --fetch  远端获取最新
   
 $ al open github # open github websit
+```
+
+### <a id="doc">doc</a> 接口文档转换
+
+```shell
+$ al doc -h
+json文件 格式化接口文档
+
+Options:
+  -y, --yapi <file>     格式化yapi
+  -s, --swagger <file>  格式化swagger
 ```
 
