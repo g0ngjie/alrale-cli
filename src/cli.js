@@ -16,6 +16,7 @@ const {
     shell,
     pipe,
     website,
+    api_doc,
 } = require('./index');
 
 /* ========== cmd methods ========== */
@@ -77,6 +78,13 @@ async function openFunc(keywords, cmd) {
     if (cmd.fetch) website.RemoteFetch()
     else if (keywords) website.Open(keywords)
     else if (cmd.t) website.ShowAll()
+}
+
+// api文档
+function apiDocFunc(cmd) {
+    const { yapi, swagger } = cmd
+    if (yapi) api_doc.FormatYapi(yapi);
+    else if (swagger) api_doc.FormatSwagger(swagger);
 }
 
 /* ========== commander ========== */
@@ -156,6 +164,13 @@ program
     .option('-f, --fetch', '远端获取最新')
     .description('常用网站\ncommand:\n[al o -t 查看所有]\n[al o gitee 打开gitee]')
     .action(openFunc);
+
+program
+    .command('doc')
+    .option('-y, --yapi <file>', '格式化yapi')
+    .option('-s, --swagger <file>', '格式化swagger')
+    .description('json文件 格式化接口文档')
+    .action(apiDocFunc);
 
 program
     .parse(process.argv);

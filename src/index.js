@@ -27,3 +27,5 @@ exports.shell = require('./shell')
 exports.pipe = require('./pipe')
 // 网站
 exports.website = require('./website')
+// api文档
+exports.api_doc = require('./api_doc')
