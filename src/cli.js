@@ -17,6 +17,7 @@ const {
     pipe,
     website,
     api_doc,
+    color
 } = require('./index');
 
 /* ========== cmd methods ========== */
@@ -171,6 +172,11 @@ program
     .option('-s, --swagger <file>', '格式化swagger')
     .description('json文件 格式化接口文档')
     .action(apiDocFunc);
+
+program
+    .command('color')
+    .description('常用颜色Hex表')
+    .action(color.ColorTable);
 
 program
     .parse(process.argv);

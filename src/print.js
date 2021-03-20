@@ -15,3 +15,7 @@ exports.Messages = function (infos) {
 exports.Message = function (info) {
     console.log(chalk.cyanBright(info))
 }
+
+exports.CustomColor = function (hex, ...msg) {
+    return chalk.hex(hex)(...msg)
+}

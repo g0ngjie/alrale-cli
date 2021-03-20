@@ -29,3 +29,5 @@ exports.pipe = require('./pipe')
 exports.website = require('./website')
 // api文档
 exports.api_doc = require('./api_doc')
+// color
+exports.color = require('./color')
