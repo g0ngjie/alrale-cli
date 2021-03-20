@@ -24,6 +24,7 @@
   - <a href="#pipe-execute">execute</a> 执行
 - <a href="#website">website</a> 常用网站
 - <a href="#doc">doc</a> 接口文档转换
+- <a href="#color">color</a> 常用颜色Hex表
 
 
 
@@ -317,5 +318,11 @@ json文件 格式化接口文档
 Options:
   -y, --yapi <file>     格式化yapi
   -s, --swagger <file>  格式化swagger
+```
+
+### <a id="color">color</a> 常用颜色Hex表
+
+```shell
+$ al color
 ```
 
