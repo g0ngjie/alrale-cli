@@ -75,6 +75,7 @@ function pipeFunc(cmd) {
 
 // 常用网站
 async function openFunc(keywords, cmd) {
+    if (cmd.clear) return website.Clear()
     await website.SyncConfig();
     if (cmd.fetch) website.RemoteFetch()
     else if (keywords) website.Open(keywords)
@@ -163,6 +164,7 @@ program
     .alias('o')
     .option('-t', '查看所有')
     .option('-f, --fetch', '远端获取最新')
+    .option('-c, --clear', '清空本地用户配置信息')
     .description('常用网站\ncommand:\n[al o -t 查看所有]\n[al o gitee 打开gitee]')
     .action(openFunc);
 

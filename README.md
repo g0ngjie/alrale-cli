@@ -305,6 +305,7 @@ command:
 Options:
   -t           查看所有
   -f, --fetch  远端获取最新
+  -c, --clear  清空本地用户配置信息
   
 $ al open github # open github websit
 ```

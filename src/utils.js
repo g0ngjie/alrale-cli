@@ -195,10 +195,10 @@ exports.GetConfig = async function (key) {
             const read_file = fs.readFileSync(CONFIG_FILE, { encoding: 'utf8' });
             if (read_file) {
                 const get_data = JSON.parse(read_file)[key];
-                if (get_data) return { ok: true, data: get_data };
+                if (get_data) return { ok: true, data: get_data, msg: '获取用户配置' };
                 return { ok: false, msg: '空' };
             }
-            return { ok: true, msg: '未有配置' };
+            return { ok: false, msg: '未有配置' };
         }
     } catch (error) {
         return { ok: false, msg: '异常' }
@@ -228,5 +228,21 @@ exports.SetConfig = async function (data = {}) {
         }
     } catch (error) {
         return { ok: false, msg: '异常' };
+    }
+}
+
+/**
+ * 本地用户配置清空
+ * @returns 
+ */
+exports.ClearConfig = async function () {
+    try {
+        const exists = fs.existsSync(CONFIG_FILE);
+        if (!exists) return { ok: true, msg: '本地文件不存在' }
+        // 初始化配置
+        fs.writeFileSync(CONFIG_FILE, '', { encoding: 'utf8' });
+        return { ok: true, msg: '已被清空' }
+    } catch (error) {
+        return { ok: false, msg: error };
     }
 }

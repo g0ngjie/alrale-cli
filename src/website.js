@@ -20,8 +20,9 @@ const WEBSITE_KEY = 'websit';
 
 /**同步配置 */
 exports.SyncConfig = async function () {
-    const { ok } = await util.GetConfig(WEBSITE_KEY);
-    if (!ok) {
+    const { ok: confOk, msg: errMsg } = await util.GetConfig(WEBSITE_KEY);
+    if (!confOk) {
+        print.Error(errMsg)
         const { ok, msg, data } = await util.Inquirer([
             {
                 type: 'input',
@@ -55,6 +56,15 @@ exports.SyncConfig = async function () {
             print.Error(err);
             process.exit(1)
         }
+    }
+}
+
+exports.Clear = async function () {
+    const { ok, msg } = await util.ClearConfig();
+    if(ok) print.Message(msg);
+    else {
+        print.Error(msg);
+        process.exit(1);
     }
 }
 
