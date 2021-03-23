@@ -25,7 +25,7 @@ function vue2BasicElementUI(custom) {
 /**
  * 下载vue2-element-ui-components基础组件库
  */
- function vue2BasicElementUIComponents(custom) {
+function vue2BasicElementUIComponents(custom) {
     const url = 'https://gitee.com:gjwork/vue2-basic-element-ui-components#master'
     const dir = custom === '[default]' ? 'vue2-basic-element-ui-components' : custom
     return util.DownloadTemplate(url, dir)
@@ -41,9 +41,9 @@ exports.InitTemplate = async function () {
             message: '模板选择',
             name: 'template',
             choices: [
-                "koa2-basic-template", 
-                "vue2-basic-element-ui-template", 
-                "vue2-basic-element-ui-components"
+                { name: 'koa2基础模板', value: 'koa2-basic-template' },
+                { name: 'vue2+ElementUI基础模板', value: 'vue2-basic-element-ui-template' },
+                { name: 'vue2+ElementUI基础组件库', value: 'vue2-basic-element-ui-components' },
             ],
         }, {
             type: 'input',

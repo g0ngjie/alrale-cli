@@ -61,7 +61,7 @@ exports.SyncConfig = async function () {
 
 exports.Clear = async function () {
     const { ok, msg } = await util.ClearConfig();
-    if(ok) print.Message(msg);
+    if (ok) print.Message(msg);
     else {
         print.Error(msg);
         process.exit(1);
