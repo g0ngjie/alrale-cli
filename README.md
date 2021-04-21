@@ -25,6 +25,7 @@
 - <a href="#website">website</a> 常用网站
 - <a href="#doc">doc</a> 接口文档转换
 - <a href="#color">color</a> 常用颜色Hex表
+- <a href="#git">git</a> commit emoji表
 
 
 
@@ -327,3 +328,8 @@ Options:
 $ al color
 ```
 
+### <a id="git">git</a> commit emoji表
+
+```shell
+$ al git
+```
