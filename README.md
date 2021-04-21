@@ -331,5 +331,6 @@ $ al color
 ### <a id="git">git</a> commit emoji表
 
 ```shell
-$ al git
+$ al git # table
+$ al git -l # list
 ```
