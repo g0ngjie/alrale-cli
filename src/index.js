@@ -31,3 +31,5 @@ exports.website = require('./website')
 exports.api_doc = require('./api_doc')
 // color
 exports.color = require('./color')
+// git
+exports.git = require('./git')

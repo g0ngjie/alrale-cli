@@ -17,7 +17,8 @@ const {
     pipe,
     website,
     api_doc,
-    color
+    color,
+    git
 } = require('./index');
 
 /* ========== cmd methods ========== */
@@ -179,6 +180,11 @@ program
     .command('color')
     .description('常用颜色Hex表')
     .action(color.ColorTable);
+
+program
+    .command('git')
+    .description('emoji')
+    .action(git.Emojis);
 
 program
     .parse(process.argv);
