@@ -90,6 +90,13 @@ function apiDocFunc(cmd) {
     else if (swagger) api_doc.FormatSwagger(swagger);
 }
 
+// git
+function gitFunc(cmd) {
+    const { list } = cmd
+    if (list) return git.EmojiList()
+    else return git.EmojiTable()
+}
+
 /* ========== commander ========== */
 program
     .version(PKG.version, '-v, -version')
@@ -183,8 +190,9 @@ program
 
 program
     .command('git')
+    .option('-l, --list', '查看所有 (| grep [args])')
     .description('emoji')
-    .action(git.Emojis);
+    .action(gitFunc);
 
 program
     .parse(process.argv);
