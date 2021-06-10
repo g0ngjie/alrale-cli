@@ -8,7 +8,7 @@ const print = require('./print')
  * 下载koa2模板
  */
 function koaBasicServices(custom) {
-    const url = 'https://gitee.com:gjwork/koa2-basic-services-template#master'
+    const url = 'https://gitee.com:g0ngjie/koa2-basic-services-template#master'
     const dir = custom === '[default]' ? 'koa2-basic-services-template' : custom
     return util.DownloadTemplate(url, dir)
 }
@@ -17,7 +17,7 @@ function koaBasicServices(custom) {
  * 下载vue2-element-ui模板
  */
 function vue2BasicElementUI(custom) {
-    const url = 'https://gitee.com:gjwork/vue2-basic-element-ui-template#master'
+    const url = 'https://gitee.com:g0ngjie/vue2-basic-element-ui-template#master'
     const dir = custom === '[default]' ? 'vue2-basic-element-ui-template' : custom
     return util.DownloadTemplate(url, dir)
 }
@@ -26,7 +26,7 @@ function vue2BasicElementUI(custom) {
  * 下载vue2-element-ui-components基础组件库
  */
 function vue2BasicElementUIComponents(custom) {
-    const url = 'https://gitee.com:gjwork/vue2-basic-element-ui-components#master'
+    const url = 'https://gitee.com:g0ngjie/vue2-basic-element-ui-components#master'
     const dir = custom === '[default]' ? 'vue2-basic-element-ui-components' : custom
     return util.DownloadTemplate(url, dir)
 }

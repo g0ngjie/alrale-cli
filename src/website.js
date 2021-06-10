@@ -33,7 +33,7 @@ exports.SyncConfig = async function () {
                 type: 'input',
                 message: 'owner(作者)',
                 name: 'owner',
-                default: 'gjwork'
+                default: 'g0ngjie'
             }, {
                 type: 'input',
                 message: 'name(项目名)',
