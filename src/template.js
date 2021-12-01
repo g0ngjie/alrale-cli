@@ -14,7 +14,7 @@ function koaBasicServices(custom) {
 }
 
 function koaSqlite3BasicServices(custom) {
-    const url = 'https://gitee.com:g0ngjie/koa2-basic-services-template#master'
+    const url = 'https://gitee.com:g0ngjie/koa2-sqlite3-template#master'
     const dir = custom === '[default]' ? 'koa2-sqlite3-template' : custom
     return util.DownloadTemplate(url, dir)
 }
