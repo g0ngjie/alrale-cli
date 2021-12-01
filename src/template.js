@@ -13,6 +13,12 @@ function koaBasicServices(custom) {
     return util.DownloadTemplate(url, dir)
 }
 
+function koaSqlite3BasicServices(custom) {
+    const url = 'https://gitee.com:g0ngjie/koa2-basic-services-template#master'
+    const dir = custom === '[default]' ? 'koa2-sqlite3-template' : custom
+    return util.DownloadTemplate(url, dir)
+}
+
 /**
  * 下载vue2-element-ui模板
  */
@@ -42,6 +48,7 @@ exports.InitTemplate = async function () {
             name: 'template',
             choices: [
                 { name: 'koa2基础模板', value: 'koa2-basic-template' },
+                { name: 'koa2+sqlite3+pkg基础模板', value: 'koa2-sqlite3-basic-template' },
                 { name: 'vue2+ElementUI基础模板', value: 'vue2-basic-element-ui-template' },
                 { name: 'vue2+ElementUI基础组件库', value: 'vue2-basic-element-ui-components' },
             ],
@@ -63,6 +70,9 @@ exports.InitTemplate = async function () {
     switch (template) {
         case 'koa2-basic-template':
             firstMsg = await koaBasicServices(custom)
+            break;
+        case 'koa2-sqlite3-basic-template':
+            firstMsg = await koaSqlite3BasicServices(custom)
             break;
         case 'vue2-basic-element-ui-template':
             firstMsg = await vue2BasicElementUI(custom)
